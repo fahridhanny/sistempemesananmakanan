@@ -12,71 +12,155 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    <style>
+@media print {
+    .page-break { display: block; page-break-before: always; }
+}
+      #invoice-POS {
+  box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+  padding: 2mm;
+  margin: 0 auto;
+  width: 44mm;
+  background: #FFF;
+}
+#invoice-POS ::selection {
+  background: #f31544;
+  color: #FFF;
+}
+#invoice-POS ::moz-selection {
+  background: #f31544;
+  color: #FFF;
+}
+#invoice-POS h1 {
+  font-size: 1.5em;
+  color: #222;
+}
+#invoice-POS h2 {
+  font-size: .9em;
+}
+#invoice-POS h3 {
+  font-size: 1.2em;
+  font-weight: 300;
+  line-height: 2em;
+}
+#invoice-POS p {
+  font-size: .5em;
+  color: #666;
+  line-height: 1.2em;
+}
+#invoice-POS #top, #invoice-POS #mid, #invoice-POS #bot {
+  /* Targets all id with 'col-' */
+  border-bottom: 1px solid #EEE;
+}
+#invoice-POS #top {
+  min-height: 30px;
+}
+#invoice-POS #mid {
+  margin-top: 8px;
+  min-height: 40px;
+}
+#invoice-POS #bot {
+  min-height: 50px;
+}
+#invoice-POS #top .logo {
+  height: 40px;
+  width: 150px;
+  background: url(https://www.sistemit.com/wp-content/uploads/2020/02/SISTEMITCOM-smlest.png) no-repeat;
+  background-size: 150px 40px;
+}
+#invoice-POS .clientlogo {
+  float: left;
+  height: 60px;
+  width: 60px;
+  background: url(https://www.sistemit.com/wp-content/uploads/2020/02/SISTEMITCOM-smlest.png) no-repeat;
+  background-size: 60px 60px;
+  border-radius: 50px;
+}
+#invoice-POS .info {
+  display: block;
+  margin-left: 0;
+}
+#invoice-POS .title {
+  float: right;
+}
+#invoice-POS .title p {
+  text-align: right;
+}
+#invoice-POS table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#invoice-POS .tabletitle {
+  font-size: .5em;
+  background: #EEE;
+}
+#invoice-POS .service {
+  border-bottom: 1px solid #EEE;
+}
+#invoice-POS .item {
+  width: 24mm;
+}
+#invoice-POS .itemtext {
+  font-size: .5em;
+}
+#invoice-POS #legalcopy {
+  margin-top: 5mm;
+}
+ 
+    </style>
 </head>
-<body>
-	<div class="container">
-		<div class="row justify-content-between mt-3">
-          <div class="col">
-          	{{ date('d-m-Y'); }}
-          </div>
-          <div class="col">
-          	<h3>Bukti Pembayaran</h3>
-          </div>
-          <div class="col">
-          </div>
-	    </div>
-		<div class="row justify-content-md-center">
-	      <div class="col mt-4">
-			<table class="table">
-		      <thead>
-			    <tr>
-				  <th>No</th>
-				  <th>Nama Menu</th>
-				  <th>Harga</th>
-				  <th>Jumlah</th>
-				  <th>Jumlah Harga</th>
-			    </tr>
-		      </thead>
-		      <tbody>
-			    @foreach($pesananDetail as $no => $data)
-			    <tr>
-				  <td>{{ $no+=1 }}</td>
-				  <td>{{ $data->nama_menu }}</td>
-				  <td>{{ $data->harga }}</td>
-				  <td>{{ $data->jumlah }}</td>
-				  <td>{{ $data->jumlah_harga }}</td>
-			    </tr>
-			    @endforeach
-		      </tbody>
-	        </table>
-	      </div>
-		</div>
-		<div class="row justify-content-start mt-4">
-			<div class="col">
-				<strong>No. Pesanan :</strong> {{ $pesanan->no_pesanan }}
-			</div>
-		</div>
-		<div class="row justify-content-start mt-4">
-			<div class="col">
-				<strong>Atas Nama :</strong> {{ $pesanan->atas_nama }}
-			</div>
-		</div>
-		<div class="row justify-content-start mt-4">
-			<div class="col">
-				<strong>Total Harga :</strong> Rp. {{ number_format($pesanan->total_harga) }}
-			</div>
-		</div>
-		<div class="row justify-content-start mt-4">
-			<div class="col">
-				<strong>Membayar :</strong> Rp. {{ number_format($pesanan->transaksi_diterima) }}
-			</div>
-		</div>
-		<div class="row justify-content-start mt-4">
-			<div class="col">
-				<strong>Kembalian :</strong> Rp. {{ number_format($pesanan->transaksi_kembali) }}
-			</div>
-		</div>
-	</div>
+<body translate="no">
+	<div id="invoice-POS">
+ 
+    <center id="top">
+      <div class="info"> 
+        <h2>Warunk Bakso</h2>
+      </div><!--End Info-->
+    </center><!--End InvoiceTop-->
+ 
+    <div id="mid">
+      <div class="info">
+        <p> 
+           Alamat : Jl. Kembang Raya Selatan, Jakarta Pusat</br>
+            Telephone   : 085213619087</br>
+        </p>
+      </div>
+    </div><!--End Invoice Mid-->
+ 
+    <div id="bot">
+ 
+                    <div id="table">
+                        <table>
+                            <tr class="tabletitle">
+                                <td class="item"><h2>Item</h2></td>
+                                <td class="Hours"><h2>Qty</h2></td>
+                                <td class="Rate"><h2>Sub Total</h2></td>
+                            </tr>
+ 							@foreach($pesananDetail as $data)
+                            <tr class="service">
+                                <td class="tableitem"><p class="itemtext">{{ $data->nama_menu }}</p></td>
+                                <td class="tableitem"><p class="itemtext">{{ $data->jumlah }}</p></td>
+                                <td class="tableitem"><p class="itemtext">Rp. {{ number_format($data->harga) }}</p></td>
+                            </tr>
+                            @endforeach
+ 
+                            <tr class="tabletitle">
+                                <td></td>
+                                <td class="Rate"><h2>Total</h2></td>
+                                <td class="payment"><h2>Rp. {{ number_format($pesanan->total_harga) }}</h2></td>
+                            </tr>
+ 
+                        </table>
+                    </div><!--End Table-->
+ 
+                    <div id="legalcopy">
+                        <p class="legal"><strong>Terimakasih Telah Memesan!</strong>  Semoga layanan kami membuat anda senang dan bahagia. Jangan lupa berkunjung kembali
+                        </p>
+                    </div>
+ 
+                </div><!--End InvoiceBot-->
+  </div><!--End Invoice-->
 </body>
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
