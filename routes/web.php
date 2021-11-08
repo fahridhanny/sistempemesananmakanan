@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pesanan/detail/hapus/{id_pesanan}/{id_menu}', [PesananController::class, 'hapusPesananDetail']);
     Route::post('/pesan/{id}', [PesananController::class, 'pesan']);
     Route::get('/pesanan/masuk', [PesananController::class, 'pesananMasuk']); 
-    Route::post('/bayar', [PesananController::class, 'bayar']);   
+    Route::post('/bayar', [PesanitanController::class, 'bayar']);   
     Route::get('/hapus/pesanan/{id}', [PesananController::class, 'hapusPesanan']);
 
     Route::get('/pesanan/keluar', [PesananController::class, 'pesananKeluar']);
