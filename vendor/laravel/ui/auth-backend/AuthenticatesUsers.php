@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 trait AuthenticatesUsers
 {
@@ -43,8 +44,11 @@ trait AuthenticatesUsers
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
+        $auth = User::where('email', $request->email)->first();
+        if($auth->status == "Aktif"){
+            if ($this->attemptLogin($request)) {
+                return $this->sendLoginResponse($request);
+            }
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -68,6 +72,11 @@ trait AuthenticatesUsers
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
+        ],[
+            'email.required' => 'tidak boleh kosong',
+            'password.required' => 'tidak boleh kosong',
+            'email.string' => 'data harus string',
+            'password.string' => 'data harus string'
         ]);
     }
 
@@ -125,7 +134,10 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        $auth = User::where('email', $request->email)->first();
+        $user->update([
+            'terakhir_login' => Carbon::now()->toDateTimeString()
+        ]);
     }
 
     /**
@@ -138,9 +150,11 @@ trait AuthenticatesUsers
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
-        ]);
+        // throw ValidationException::withMessages([
+        //     $this->username() => [trans('auth.failed')],
+        // ]);
+        alert()->error('ErrorAlert','Akun Belum diaktifkan');
+        return redirect('login');
     }
 
     /**

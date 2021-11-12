@@ -33,6 +33,12 @@ trait RegistersUsers
 
         event(new Registered($user = $this->create($request->all())));
 
+        $auth = User::where('email', $request->email)->first();
+        if($auth->status == "Belum Aktif"){
+            alert()->success('SuccessAlert','Berhasil membuat akun');
+            return redirect('login');
+        }
+
         $this->guard()->login($user);
 
         if ($response = $this->registered($request, $user)) {

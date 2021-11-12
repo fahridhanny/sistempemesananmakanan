@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'hak_akses',
         'terakhir_login',
+        'status'
     ];
 
     /**

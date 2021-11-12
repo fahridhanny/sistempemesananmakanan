@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -53,6 +54,21 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'hak_akses' => ['required']
+        ], [
+            'name.required' => 'tidak boleh kosong',
+            'email.required' => 'tidak boleh kosong',
+            'password.required' => 'tidak boleh kosong',
+            'hak_akses.required' => 'tidak boleh kosong',
+            'name.string' => 'data harus string',
+            'email.string' => 'data harus string',
+            'password.string' => 'data harus string',
+            'name.max' => 'maximal 255 string',
+            'email.max' => 'maksimal 255 string',
+            'password.min' => 'minimal 8 string',
+            'email.unique' => 'email sudah terdaftar',
+            'email.email' => 'format berupda email',
+            'password.confirmed' => 'password tidak sama'
         ]);
     }
 
@@ -68,6 +84,9 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'hak_akses' => $data['hak_akses'],
+            'status' => 'Belum Aktif',
+            'terakhir_login' => Carbon::now()->toDateTimeString(),
         ]);
     }
 }
