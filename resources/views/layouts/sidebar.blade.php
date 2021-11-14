@@ -43,6 +43,7 @@
             </li>
             @endif
 
+            @if(auth()->user()->hak_akses != "admin")
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
@@ -58,6 +59,25 @@
                     <i class="fas fa-clipboard-list pr-2"></i>
                     <span>Pesanan Sudah Dibayar</span></a>
             </li>
+            @endif
+
+            @if(auth()->user()->hak_akses == "admin")
+                <hr class="sidebar-divider my-0">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="/menu">
+                        <i class="fas fa-utensils pr-2"></i>
+                        <span>Menu</span></a>
+                </li>
+
+                <hr class="sidebar-divider my-0">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="/user">
+                        <i class="fas fa-users pr-2"></i>
+                        <span>User</span></a>
+                </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

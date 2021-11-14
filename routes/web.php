@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,5 +38,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/searchDibayar', [PesananController::class, 'searchDibayar']);
     Route::get('/searchBelumDibayar', [PesananController::class, 'searchBelumDibayar']);
+    Route::get('/searchMenu', [MenuController::class, 'searchMenu']);
+    Route::get('/searchUser', [UserController::class, 'searchUser']);
 
+    Route::get('/menu', [MenuController::class, 'menu']);
+    Route::post('/tambah/menu', [MenuController::class, 'tambahMenu']);
+    Route::post('/edit/menu', [MenuController::class, 'editMenu']);
+    Route::get('/hapus/menu/{id}', [MenuController::class, 'hapusMenu']);
+
+    Route::get('/user', [UserController::class, 'user']);
+    Route::post('/tambah/user', [UserController::class, 'tambahUser']);
+    Route::post('/edit/user', [UserController::class, 'editUser']);
+    Route::get('/hapus/user/{id}', [UserController::class, 'hapusUser']);
 });

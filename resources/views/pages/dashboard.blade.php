@@ -9,6 +9,8 @@
                                 Selamat Datang Pelayan!
                             @elseif(Auth()->user()->hak_akses == "kasir")
                                 Selamat Datang Kasir!
+                            @elseif(Auth()->user()->hak_akses == "admin")
+                                Selamat Datang Admin!
                             @endif
                         </h1>
                     </div>
